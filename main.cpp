@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <iomanip>
 #include <Windows.h>
+#include <string>
 using namespace std;
 
 void gotoxy(int x, int y) {
@@ -53,7 +54,7 @@ void display_menu(int selected) {
 int main() {
     int selected = 1;
     display_menu(selected);
-
+    int a;
     while (true) {
         char choice = _getch();
         if (choice == -32) { 
@@ -72,13 +73,44 @@ int main() {
             system("cls");
             switch (selected) {
             case 1:
-               
+                cout << "Enter a number with 6 digits: ";
+                cin >> a;
+                if (to_string(a).length() != 6) {
+                    cout << "The number must have 6 digits!" << endl;
+                    break;
+                }
+                else {
+                    string num_str = to_string(a);
+                    int sum1 = (num_str[0] - '0') + (num_str[1] - '0') + (num_str[2] - '0');
+                    int sum2 = (num_str[3] - '0') + (num_str[4] - '0') + (num_str[5] - '0');
+                    if (sum1 == sum2) {
+                        cout << "The number is lucky!" << endl;
+                    }
+                    else {
+                        cout << "The number is not lucky!" << endl;
+                    }
+                }
                 break;
+
             case 2:
-               
+                cout << "Enter a number with 4 digits: ";
+                cin >> a;
+                if (to_string(a).length() != 4) {
+                    cout << "The number must have 4 digits!" << endl;
+                    break;
+                }
+                else {
+                    int digit4 = a % 10;
+                    int digit3 = (a / 10) % 10;
+                    int digit2 = (a / 100) % 10;
+                    int digit1 = (a / 1000) % 10;
+
+                    cout << "Result: " << digit2 << digit1 << digit4 << digit3 << endl;
+                }
                 break;
+
             case 3:
-               
+                
                 break;
             case 4:
                 
