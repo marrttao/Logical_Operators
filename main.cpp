@@ -55,6 +55,7 @@ int main() {
     int selected = 1;
     display_menu(selected);
     int a;
+    const int tank_size = 300; // Move the declaration outside the switch statement
     while (true) {
         char choice = _getch();
         if (choice == -32) {
@@ -123,44 +124,67 @@ int main() {
                 cout << "Maximum number : " << max_final << endl;
                 break;
             }
-            case 4:
+            case 4: {
                 int AB, BC;
-				const int tank_size = 300;
                 int luggage_size;
-				cout << "Enter the distance between A and B: ";
-				cin >> AB;
-				cout << "Enter the distance between B and C: ";
-				cin >> BC;
-				cout << "Enter the luggage size: ";
-				cin >> luggage_size;
-                
+                int refueling;
+                cout << "Enter the distance between A and B: ";
+                cin >> AB;
+                cout << "Enter the distance between B and C: ";
+                cin >> BC;
+                cout << "Enter the luggage size: ";
+                cin >> luggage_size;
+
                 if (luggage_size <= 2000) {
                     int you_need;
+					
                     if (luggage_size < 500) {
-                        you_need = AB * 1;
+
+                        you_need = (AB+BC) * 1;
                     }
-					else if (luggage_size < 1000) {
-						you_need = AB * 4;
-					}
-					else if (luggage_size < 1500) {
-						you_need = AB * 7;
-					}
-					else {
-						you_need = AB * 9;
-					}
-					if (you_need > tank_size) {
-						cout << "You can't fly this route" << endl;
-					}
-					else {
-						cout << "You need: " << you_need << " liters " << endl;
-					}
+                    else if (luggage_size < 1000) {
+                        you_need = (AB + BC) * 4;
+                    }
+                    else if (luggage_size < 1500) {
+                        you_need = (AB + BC) * 7;
+                    }
+                    else {
+                        you_need = (AB + BC) * 9;
+                    }
+                    if (you_need > tank_size) {
+                        int you_need_to_b;
+                        if (luggage_size < 500) {
+
+                            you_need_to_b = AB * 1;
+                        }
+                        else if (luggage_size < 1000) {
+                            you_need_to_b = AB * 4;
+                        }
+                        else if (luggage_size < 1500) {
+                            you_need_to_b = AB * 7;
+                        }
+                        else {
+                            you_need_to_b = AB * 9;
+                        }
+                        if (you_need_to_b > tank_size) {
+                            cout << "You can't fly this route" << endl;
+                        }
+                        else {
+                            refueling = tank_size - you_need_to_b;
+							cout << "You need: " << you_need_to_b << " liters " << "From A to B for refueling and you need to refill " << refueling << endl;
+                        }
+                    }
+                    else {
+                        refueling = tank_size - you_need;
+
+                        cout << "You need: " << you_need << " liters " << "From A to C" << endl;
+                    }
                 }
                 else {
-                    cout << "You cant fly this route" << endl;
+                    cout << "You can't fly this route" << endl;
                 }
-
-
                 break;
+            }
             case 5:
                 return 0;
             }
