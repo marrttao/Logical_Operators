@@ -6,7 +6,7 @@
 using namespace std;
 
 void gotoxy(int x, int y) {
-    COORD pos = { x, y };
+    COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
     HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleCursorPosition(output, pos);
 }
@@ -57,19 +57,19 @@ int main() {
     int a;
     while (true) {
         char choice = _getch();
-        if (choice == -32) { 
+        if (choice == -32) {
             choice = _getch();
             switch (choice) {
-            case 72: 
+            case 72:
                 if (selected > 1) selected--;
                 break;
-            case 80: 
+            case 80:
                 if (selected < 5) selected++;
                 break;
             }
             display_menu(selected);
         }
-        else if (choice == 13) { 
+        else if (choice == 13) {
             system("cls");
             switch (selected) {
             case 1:
@@ -109,14 +109,60 @@ int main() {
                 }
                 break;
 
-            case 3:
-                
+            case 3: {
+                int numbers[7];
+                cout << "7 Numbers: " << endl;
+                cin >> numbers[0] >> numbers[1] >> numbers[2] >> numbers[3] >> numbers[4] >> numbers[5] >> numbers[6];
+                int max1 = (numbers[0] > numbers[1]) ? numbers[0] : numbers[1];
+                int max2 = (numbers[2] > numbers[3]) ? numbers[2] : numbers[3];
+                int max3 = (numbers[4] > numbers[5]) ? numbers[4] : numbers[5];
+                int max4 = numbers[6];
+                int max12 = (max1 > max2) ? max1 : max2;
+                int max34 = (max3 > max4) ? max3 : max4;
+                int max_final = (max12 > max34) ? max12 : max34;
+                cout << "Maximum number : " << max_final << endl;
                 break;
+            }
             case 4:
+                int AB, BC;
+				const int tank_size = 300;
+                int luggage_size;
+				cout << "Enter the distance between A and B: ";
+				cin >> AB;
+				cout << "Enter the distance between B and C: ";
+				cin >> BC;
+				cout << "Enter the luggage size: ";
+				cin >> luggage_size;
                 
+                if (luggage_size <= 2000) {
+                    int you_need;
+                    if (luggage_size < 500) {
+                        you_need = AB * 1;
+                    }
+					else if (luggage_size < 1000) {
+						you_need = AB * 4;
+					}
+					else if (luggage_size < 1500) {
+						you_need = AB * 7;
+					}
+					else {
+						you_need = AB * 9;
+					}
+					if (you_need > tank_size) {
+						cout << "You can't fly this route" << endl;
+					}
+					else {
+						cout << "You need: " << you_need << " liters " << endl;
+					}
+                }
+                else {
+                    cout << "You cant fly this route" << endl;
+                }
+
+
                 break;
             case 5:
-                break;
+                return 0;
             }
             system("pause");
             display_menu(selected);
